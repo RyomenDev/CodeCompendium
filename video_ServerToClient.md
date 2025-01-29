@@ -80,6 +80,120 @@ const VideoPlayer = () => {
 export default VideoPlayer;
 ```
 
+## 🚀 Streaming Using WebRTC (Real-Time Streaming)
+**Use case:** Best for **real-time video streaming** (e.g., video calls, live events).
+**Backend:** Use **WebRTC** (via simple-peer or socket.io).
+**Frontend:** Use **WebRTC API.**
+### Libraries to Use
+socket.io - For WebSockets communication
+simple-peer - Peer-to-peer WebRTC handling
+
+## 🚀 Streaming Using HLS (HTTP Live Streaming)
+**Use case:** Ideal for large videos or live streaming.
+**Backend:** Use **FFmpeg** to convert MP4 to HLS (.m3u8 format).
+**Frontend:** Use **hls.js** to load the video.
+
+### Backend (FFmpeg + Express.js)
+Convert a video to HLS:
+```bash
+ffmpeg -i sample.mp4 -codec: copy -start_number 0 -hls_time 10 -hls_list_size 0 -f hls output.m3u8
+```
+Serve the video via Express:
+
+```javascript
+import express from "express";
+import path from "path";
+
+const app = express();
+app.use("/videos", express.static(path.join(__dirname, "videos")));
+
+app.listen(5000, () => console.log("Server running on port 5000"));
+
+```
+### Frontend (React + hls.js)
+```javascript
+import { useEffect, useRef } from "react";
+import Hls from "hls.js";
+
+const HLSPlayer = () => {
+    const videoRef = useRef(null);
+
+    useEffect(() => {
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource("http://localhost:5000/videos/output.m3u8");
+            hls.attachMedia(videoRef.current);
+        }
+    }, []);
+
+    return <video ref={videoRef} controls />;
+};
+
+export default HLSPlayer;
+```
+**Libraries Used:**
+hls.js (Frontend)
+FFmpeg (Backend for conversion)
+
+## 🚀 Streaming Using RTMP (For Live Streaming)
+**Use case:** Best for **broadcasting live streams (e.g., YouTube, Twitch-like platforms).**
+**Backend:** Use **NGINX RTMP Module.**
+**Frontend:** Use video.js.
+### Steps:
+Install NGINX with RTMP.
+Configure nginx.conf:
+
+**Configure nginx.conf:**
+```conf
+rtmp {
+    server {
+        listen 1935;
+        chunk_size 4096;
+
+        application live {
+            live on;
+            record off;
+        }
+    }
+}
+```
+Use FFmpeg to stream:
+```bash
+ffmpeg -re -i input.mp4 -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3000k -bufsize 6000k -c:a aac -b:a 128k -f flv rtmp://localhost/live/stream
+```
+On the frontend, use video.js:
+```javascript
+import VideoJS from 'video.js';
+
+const LiveStreamPlayer = () => (
+    <video-js
+        className="video-js"
+        controls
+        preload="auto"
+        data-setup='{ "fluid": true }'
+    >
+        <source src="rtmp://localhost/live/stream" type="rtmp/flv" />
+    </video-js>
+);
+
+export default LiveStreamPlayer;
+```
+**Libraries Used:**
+
+video.js
+FFmpeg
+NGINX RTMP module
+
+## Summary: Choosing the Best Method
+<p align="center">
+  <img src="./assests/VideoStreamingMethods.png" alt="VideoStreamingMethods" />
+</p>
+
+## Best Libraries for Video Streaming
+<p align="center">
+  <img src="./assests/videoStreaminglLibs.png" alt="videoStreaminglLibs" />
+</p>
+
 ## 📌 Third-Party Services
 - **Cloudflare Stream** (For scalable video delivery)
 - **MUX** (For adaptive streaming)
