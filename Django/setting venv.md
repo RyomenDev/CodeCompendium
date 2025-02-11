@@ -52,7 +52,6 @@ python my_script.py
   - Type "Python: Select Interpreter" and choose the command.
   - Select the Python interpreter from the list that's located within your .venv folder (e.g., .venv\Scripts\python.exe on Windows or .venv/bin/python on macOS/Linux).
 
-
 ## Additional Notes
 
 - Always use virtual environments to manage dependencies.
@@ -71,5 +70,3 @@ This project demonstrates the use of virtual environments in Python to manage de
 # My Python Project
 
 This project demonstrates how to use a virtual environment with Python in VS Code.
-
-
