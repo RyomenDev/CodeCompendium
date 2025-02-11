@@ -53,3 +53,23 @@ python my_script.py
   - Select the Python interpreter from the list that's located within your .venv folder (e.g., .venv\Scripts\python.exe on Windows or .venv/bin/python on macOS/Linux).
 
 
+## Additional Notes
+
+- Always use virtual environments to manage dependencies.
+- Keep your dependencies organized and isolated from other projects.
+- Use `requirements.txt` to store your project's dependencies.
+
+## References
+
+- [Python Virtual Environments](https://docs.python.org/3/library/venv.html)
+- [Pip Documentation](https://pip.pypa.io/en/stable/)
+
+## Summary
+
+This project demonstrates the use of virtual environments in Python to manage dependencies and isolate project environments.
+
+# My Python Project
+
+This project demonstrates how to use a virtual environment with Python in VS Code.
+
+
