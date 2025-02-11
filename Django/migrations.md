@@ -1,0 +1,1 @@
+# How to use makemigrations and migrate in django
